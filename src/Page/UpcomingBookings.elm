@@ -5,17 +5,7 @@ import Element exposing (Element, centerX, column, el, fill, link, padding, para
 import Element.Background as Background
 import Element.Font as Font
 import Element.Region exposing (heading)
-import Page.UpcomingBookings.HotelCard as HotelCard
-
-
-bookingView : Booking -> msg -> Element msg
-bookingView booking viewBookingMsg =
-    case booking.product.travelType of
-        Hotel ->
-            HotelCard.view booking viewBookingMsg
-
-        _ ->
-            text "travel type not implemented"
+import Page.UpcomingBookings.BookingCard as BookingCard
 
 
 noBookingsView : Element msg
@@ -62,7 +52,7 @@ view upcomingBookings viewBookingMsg =
             case upcomingBookings of
                 Just bookings ->
                     List.map
-                        (\x -> bookingView x (viewBookingMsg x))
+                        (\x -> BookingCard.view x (viewBookingMsg x))
                         bookings
 
                 Nothing ->
