@@ -2,6 +2,7 @@ module Data.Train exposing (dateOfDeparture, timeOfDeparture, ticketType, depart
 
 import Data.Bookings exposing (Booking)
 
+
 dateOfDeparture : Booking -> String
 dateOfDeparture booking = 
     case booking.product.details.journeys of
@@ -19,6 +20,7 @@ dateOfDeparture booking =
                     "First journey not recorded"
         Nothing ->
             "Journeys not recorded"
+
 
 timeOfDeparture : Booking -> String
 timeOfDeparture booking = 
@@ -38,6 +40,7 @@ timeOfDeparture booking =
         Nothing ->
             "Journeys not recorded"
 
+
 ticketType : Booking -> String
 ticketType booking = 
     case booking.product.details.journeys of
@@ -50,6 +53,7 @@ ticketType booking =
                     "First journey not recorded"
         Nothing ->
             "Journeys not recorded"
+
 
 departureStation : Booking -> String
 departureStation booking =
@@ -68,6 +72,7 @@ departureStation booking =
                     "First journey not recorded"
         Nothing ->
             "Journeys not recorded"
+
 
 arrivalStation : Booking -> String
 arrivalStation booking = 
