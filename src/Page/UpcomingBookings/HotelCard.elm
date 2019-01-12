@@ -1,4 +1,4 @@
-module View.HotelCard exposing (view)
+module Page.UpcomingBookings.HotelCard exposing (view)
 
 import Data.Bookings exposing (Booking)
 import Data.Hotel as Hotel
@@ -6,8 +6,8 @@ import Element exposing (Element, centerX, column, el, fill, fillPortion, link, 
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Page.UpcomingBookings.ViewBookingButton as ViewBookingButton
 import Util.Date exposing (dayAsNumber, monthAsString)
-import View.ViewBookingButton as ViewBookingButton
 
 
 view : Booking -> msg -> Element msg

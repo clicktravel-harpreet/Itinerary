@@ -2,6 +2,7 @@ module Data.Bookings exposing
     ( Booker
     , Booking
     , BookingsResponse
+    , FlightDetails
     , SubProduct
     , TravelType(..)
     , bookingReference
@@ -81,6 +82,7 @@ type alias ProductDetails =
     , profileImage : Maybe ProfileImage
     , propertyName : Maybe String
     , telephone : Maybe String
+    , flights : Maybe (List FlightDetails)
     }
 
 
@@ -135,7 +137,6 @@ type alias Product =
     { details : ProductDetails
     , subProducts : List SubProduct
     , travelType : TravelType
-    , flights : Maybe (List FlightDetails)
     }
 
 
@@ -171,6 +172,7 @@ productDetailsDecoder =
         |> optional "profileImage" (nullable profileImageDecoder) Nothing
         |> optional "propertyName" (nullable string) Nothing
         |> optional "telephone" (nullable string) Nothing
+        |> optional "flights" (nullable (list flightDetailsDecoder)) Nothing
 
 
 subProductBookingDetailsDecoder : Decoder SubProductBookingDetails
@@ -277,7 +279,6 @@ productDecoder =
         |> required "details" productDetailsDecoder
         |> required "subProducts" (list subProductDecoder)
         |> required "travelType" travelTypeDecoder
-        |> optional "flights" (nullable (list flightDetailsDecoder)) Nothing
 
 
 bookerDecoder : Decoder Booker

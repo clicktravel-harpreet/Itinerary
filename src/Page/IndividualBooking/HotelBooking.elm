@@ -1,8 +1,8 @@
-module View.HotelBooking exposing (view)
+module Page.IndividualBooking.HotelBooking exposing (view)
 
 import Data.Bookings exposing (Booking, bookingReference)
 import Data.Hotel as Hotel
-import Element exposing (Element, centerX, column, fillPortion, link, padding, paragraph, rgb255, row, spacing, text, width, centerX)
+import Element exposing (Element, centerX, column, fillPortion, link, padding, paragraph, rgb255, row, spacing, text, width)
 import Element.Background as Background
 import Element.Font as Font
 import Element.Region exposing (heading)
@@ -107,9 +107,10 @@ view booking =
         [ title "Cancellation policy"
         , paragraph [] [ text <| Hotel.cancellationPolicy booking ]
         ]
-    , column [ centerX ] 
+    , column [ centerX ]
         [ link [ Font.underline ]
             { url = "https://apps.travel.cloud/Travel.html#/bookings/" ++ booking.id
             , label = text "View this booking in travel.cloud"
-            }]
+            }
+        ]
     ]

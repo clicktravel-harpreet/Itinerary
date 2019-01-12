@@ -6,7 +6,7 @@ import Element.Background as Background
 import Element.Font as Font
 import Element.Input exposing (button)
 import Element.Region exposing (heading)
-import View.HotelBooking as HotelBooking
+import Page.IndividualBooking.HotelBooking as HotelBooking
 
 
 view : Booking -> Element msg

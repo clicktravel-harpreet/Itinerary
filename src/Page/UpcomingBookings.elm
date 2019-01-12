@@ -5,7 +5,7 @@ import Element exposing (Element, centerX, column, el, fill, link, padding, para
 import Element.Background as Background
 import Element.Font as Font
 import Element.Region exposing (heading)
-import View.HotelCard as HotelCard
+import Page.UpcomingBookings.HotelCard as HotelCard
 
 
 bookingView : Booking -> msg -> Element msg

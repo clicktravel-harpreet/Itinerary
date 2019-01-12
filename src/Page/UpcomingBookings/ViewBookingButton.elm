@@ -1,4 +1,4 @@
-module View.ViewBookingButton exposing (view)
+module Page.UpcomingBookings.ViewBookingButton exposing (view)
 
 import Data.Bookings exposing (Booking)
 import Element exposing (Element, htmlAttribute, padding, rgb255, text)
