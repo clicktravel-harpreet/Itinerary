@@ -18,6 +18,7 @@ import Json.Decode.Pipeline exposing (optional, required)
 type TravelType
     = Hotel
     | Flight
+    | Train
 
 
 
@@ -73,6 +74,32 @@ type alias ProfileImage =
     { urls : List String }
 
 
+type alias TicketType =
+    { name : String }
+
+
+type alias TrainStationLocation =
+    { name : String }
+
+
+type alias LegDetails =
+    { location: TrainStationLocation
+    , dateTime: String
+    }
+
+
+type alias Leg =
+    { depart: LegDetails
+    , arrive: LegDetails
+    }
+
+
+type alias TrainJourney =
+    { ticketType: TicketType
+    ,legs: (List Leg) 
+    }
+
+
 type alias ProductDetails =
     -- TODO since these are _all_ maybes, perhaps we need a custom type for the different product details, and then decode into the correct type based on the booking type
     { address : Maybe (List String)
@@ -82,6 +109,7 @@ type alias ProductDetails =
     , profileImage : Maybe ProfileImage
     , propertyName : Maybe String
     , telephone : Maybe String
+    , journeys : Maybe (List TrainJourney)
     , flights : Maybe (List FlightDetails)
     }
 
@@ -162,6 +190,39 @@ profileImageDecoder =
         |> required "urls" (list string)
 
 
+trainStationLocationDecoder : Decoder TrainStationLocation
+trainStationLocationDecoder =
+    Decode.succeed TrainStationLocation
+        |> required "name" (string)
+
+
+legDetailsDecoder : Decoder LegDetails
+legDetailsDecoder =
+    Decode.succeed LegDetails
+        |> required "location" (trainStationLocationDecoder)
+        |> required "dateTime" (string)
+
+
+ticketTypeDecoder : Decoder TicketType
+ticketTypeDecoder =
+    Decode.succeed TicketType
+        |> required "name" string
+
+
+legDecoder : Decoder Leg
+legDecoder =
+    Decode.succeed Leg
+        |> required "depart" legDetailsDecoder
+        |> required "arrive" legDetailsDecoder
+
+
+trainJourneyDecoder : Decoder TrainJourney
+trainJourneyDecoder =
+    Decode.succeed TrainJourney
+        |> required "ticketType" ticketTypeDecoder
+        |> required "legs" (list legDecoder)
+
+
 productDetailsDecoder : Decoder ProductDetails
 productDetailsDecoder =
     Decode.succeed ProductDetails
@@ -172,6 +233,7 @@ productDetailsDecoder =
         |> optional "profileImage" (nullable profileImageDecoder) Nothing
         |> optional "propertyName" (nullable string) Nothing
         |> optional "telephone" (nullable string) Nothing
+        |> optional "journeys" (nullable (list trainJourneyDecoder)) Nothing
         |> optional "flights" (nullable (list flightDetailsDecoder)) Nothing
 
 
@@ -220,6 +282,9 @@ travelTypeDecoder =
 
                     "HOTEL" ->
                         Decode.succeed Hotel
+
+                    "TRAIN" ->
+                        Decode.succeed Train
 
                     unknownTravelType ->
                         Decode.fail <| "Unknown travel type: " ++ unknownTravelType
